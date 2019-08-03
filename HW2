@@ -1,0 +1,31 @@
+Sub ticker()
+For Each ws In Worksheets
+' Determine last row for each worksheet
+LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+ws.Range("I1").Value = "Ticker"
+ws.Range("J1").Value = "Total Stock Volume"
+
+' create counter for stock total
+Dim stotal, tablerow As Integer
+stotal = 0
+tablerow = 2
+' Define strings
+Dim ticker, tickerTotal As String
+
+' loop through spreadsheet
+For i = 2 To LastRow
+If ws.Cells(i, 1).Value <> ws.Cells(i + 1, 1).Value Then
+    ticker = ws.Cells(i, 1).Value
+    stotal = stotal + ws.Cells(i, 7).Value
+    ws.Range("I" & tablerow).Value = ticker
+    ws.Range("J" & tablerow).Value = stotal
+    tablerow = tablerow + 1
+    stotal = 0
+Else
+    stotal = stotal + ws.Cells(i, 7).Value
+
+End If
+    
+Next i
+Next ws
+End Sub
